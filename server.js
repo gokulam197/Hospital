@@ -2,10 +2,10 @@ const http = require('http');
 const fs = require('fs');
 const url = require('url');
 
-// Path to the JSON file
+
 const DATA_FILE = './hospitals.json';
 
-// Helper function to read data from the JSON file
+
 const readData = () => {
   try {
     const data = fs.readFileSync(DATA_FILE, 'utf8');
@@ -16,7 +16,7 @@ const readData = () => {
   }
 };
 
-// Helper function to write data to the JSON file
+
 const writeData = (data) => {
   try {
     fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
@@ -25,25 +25,24 @@ const writeData = (data) => {
   }
 };
 
-// Create HTTP server
 const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
   const pathSegments = parsedUrl.pathname.split('/').filter(seg => seg);
   const method = req.method;
 
-  // CORS headers for allowing cross-origin requests (optional)
+  
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
-  // Handle preflight requests
+  
   if (method === 'OPTIONS') {
     res.writeHead(204);
     res.end();
     return;
   }
 
-  // Routing
+  
   if (pathSegments[0] === 'hospitals') {
     // GET /hospitals or GET /hospitals/:id
     if (method === 'GET') {
